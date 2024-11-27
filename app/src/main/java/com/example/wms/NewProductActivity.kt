@@ -80,44 +80,44 @@ class NewProductActivity : DrawerActivity() {
             if (editTxtProdName.text.toString().isEmpty()) {
                 Toast.makeText(
                     this,
-                    "Please name your product",
+                    "Please name your product.",
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (editTxtDescription.text.toString().isEmpty()) {
                 Toast.makeText(
                     this,
-                    "Please enter a description for your product",
+                    "Please enter a description for your product.",
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (editTxtPrice.text.toString().isEmpty()) {
                 Toast.makeText(
                     this,
-                    "Please enter the price of your product",
+                    "Please enter the price of your product.",
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (editTxtCategory.text.toString().isEmpty()) {
                 Toast.makeText(
                     this,
-                    "Please enter the category of your product",
+                    "Please enter the category of your product.",
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (editTxtQuantity.text.toString().isEmpty()) {
                 Toast.makeText(
                     this,
-                    "Please enter the quantity of your product",
+                    "Please enter the quantity of your product.",
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (imgView.drawable == null) {
                 Toast.makeText(
                     this,
-                    "Please select an image for your product",
+                    "Please select an image for your product.",
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
                 uploadNewProduct(imgName, imgUri)
                 Toast.makeText(
                     this,
-                    "Your product has been added",
+                    "Your product has been added.",
                     Toast.LENGTH_SHORT
                 ).show()
                 startActivity(Intent(this, ManageProductActivity::class.java))
@@ -153,7 +153,7 @@ class NewProductActivity : DrawerActivity() {
             } else {
                 Toast.makeText(
                     this,
-                    "Camera permission is required to use this feature",
+                    "Camera permission is required to use this feature.",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -197,7 +197,7 @@ class NewProductActivity : DrawerActivity() {
                 mediaScanIntent.data = imgUri
                 this.sendBroadcast(mediaScanIntent)
             } else {
-                Toast.makeText(this, "Creating file failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Creating file failed.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -231,13 +231,13 @@ class NewProductActivity : DrawerActivity() {
         repository.createProduct(product, onSuccess = { product ->
             Toast.makeText(
                 this,
-                "Your product has been added",
+                "Your product has been added.",
                 Toast.LENGTH_SHORT
             ).show()
         }, onError = {
             Toast.makeText(
                 this,
-                "Failed to add product",
+                "Failed to add product.",
                 Toast.LENGTH_SHORT
             ).show()
         })

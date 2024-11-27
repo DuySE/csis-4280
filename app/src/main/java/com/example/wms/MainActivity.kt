@@ -2,7 +2,6 @@ package com.example.wms
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -36,10 +35,7 @@ class MainActivity : DrawerActivity(),
 
         // Initialize product list
         productList = mutableListOf()
-        recyclerView = mainBinding.recyclerViewItems
-        itemAdapter = ItemRecyclerViewAdapter(productList, this)
-        recyclerView.adapter = itemAdapter
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        filteredList = mutableListOf()
 
         // Initialize product repository with context
         productRepository = ProductRepository(this)
@@ -56,8 +52,10 @@ class MainActivity : DrawerActivity(),
             if (productList.isEmpty()) {
                 txtViewNoProduct.setText(R.string.txtNoProductFound)
             } else {
-                Log.d("PRODUCTS", productList.toString())
-                itemAdapter.setFilteredList(productList)
+                recyclerView = mainBinding.recyclerViewItems
+                itemAdapter = ItemRecyclerViewAdapter(productList, this)
+                recyclerView.adapter = itemAdapter
+                recyclerView.layoutManager = GridLayoutManager(this, 2)
             }
         }, onError = { error ->
             Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
@@ -89,8 +87,8 @@ class MainActivity : DrawerActivity(),
             }
         }
         if (filteredList.isEmpty()) {
+            currToast = Toast.makeText(this, "Not Found", Toast.LENGTH_SHORT)
             currToast.cancel()
-            currToast = Toast.makeText(this@MainActivity, "Not Found", Toast.LENGTH_SHORT)
             currToast.show()
         } else {
             itemAdapter.setFilteredList(filteredList)
@@ -101,7 +99,7 @@ class MainActivity : DrawerActivity(),
         val bundle = Bundle()
         if (filteredList.isNotEmpty()) bundle.putString("ID", filteredList[i].id)
         else bundle.putString("ID", productList[i].id)
-        val intent = Intent(this@MainActivity, ProductInfoActivity::class.java)
+        val intent = Intent(this, ProductInfoActivity::class.java)
         intent.putExtras(bundle)
         startActivity(intent)
     }

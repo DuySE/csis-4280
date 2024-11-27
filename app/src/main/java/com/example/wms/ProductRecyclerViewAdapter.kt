@@ -15,11 +15,9 @@ import java.util.Timer
 import java.util.TimerTask
 
 class ProductRecyclerViewAdapter(
-    products: List<Product>,
-    onItemClickListener: OnItemClickListener
+    private var products: List<Product>,
+    private var onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<ProductRecyclerViewAdapter.MyViewHolder?>() {
-    var products: List<Product>
-    var onItemClickListener: OnItemClickListener
 
     init {
         this.products = products
@@ -32,19 +30,20 @@ class ProductRecyclerViewAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
+        val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.my_product_recycler_view, parent, false)
-        return MyViewHolder(itemView)
+        return MyViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.txtViewName.text = products[position].name
-        holder.txtViewDescription.text = products[position].description
+        holder.txtViewDescription.text =
+            String.format("Description: %s", products[position].description)
         holder.txtViewPrice.text =
-            String.format(Locale.US, "%,.2f", products[position].price.toString())
-        holder.txtViewCategory.text = products[position].category
+            String.format(Locale.US, "Price: $%,.2f", products[position].price)
+        holder.txtViewCategory.text = String.format("Category: %s", products[position].category)
         holder.txtViewQuantity.text =
-            String.format(Locale.US, "%d", products[position].quantity.toString())
+            String.format(Locale.US, "Quantity: %d", products[position].quantity)
         val imgName = products[position].imgName
         val timerTask: TimerTask = object : TimerTask() {
             override fun run() {
@@ -65,17 +64,17 @@ class ProductRecyclerViewAdapter(
         return products.size
     }
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imgView: ImageView = itemView.findViewById<ImageView>(R.id.imgViewRecyclerImg)
-        var imgViewEdit: ImageView = itemView.findViewById<ImageView>(R.id.imgViewRecyclerEdit)
-        var txtViewName: TextView = itemView.findViewById<TextView>(R.id.txtViewRecyclerName)
-        var txtViewDescription: TextView =
-            itemView.findViewById<TextView>(R.id.txtViewRecyclerDescription)
-        var txtViewPrice: TextView = itemView.findViewById<TextView>(R.id.txtViewRecyclerPrice)
-        var txtViewCategory: TextView =
-            itemView.findViewById<TextView>(R.id.txtViewRecyclerCategory)
-        var txtViewQuantity: TextView =
-            itemView.findViewById<TextView>(R.id.txtViewRecyclerQuantity)
+    inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val imgView: ImageView = view.findViewById<ImageView>(R.id.imgViewRecyclerImg)
+        val imgViewEdit: ImageView = view.findViewById<ImageView>(R.id.imgViewRecyclerEdit)
+        val txtViewName: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerName)
+        val txtViewDescription: TextView =
+            view.findViewById<TextView>(R.id.txtViewRecyclerDescription)
+        val txtViewPrice: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerPrice)
+        val txtViewCategory: TextView =
+            view.findViewById<TextView>(R.id.txtViewRecyclerCategory)
+        val txtViewQuantity: TextView =
+            view.findViewById<TextView>(R.id.txtViewRecyclerQuantity)
 
         init {
             imgViewEdit.setOnClickListener {

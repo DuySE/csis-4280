@@ -115,7 +115,7 @@
             android:id="@+id/editTxtCategoryEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
+            android:inputType="text"
             android:textColorHint="#546E7A" />
 
     </com.google.android.material.textfield.TextInputLayout>

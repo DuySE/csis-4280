@@ -45,8 +45,8 @@ class EditProductActivity : DrawerActivity() {
     private lateinit var btnEditProd: Button
     private lateinit var imgPath: String
     private lateinit var imgName: String
-    private lateinit var imgUri: Uri
-    private lateinit var status: String
+    private var imgUri: Uri? = null
+    private var isImageChanged: Boolean = false
 
     private val storage: FirebaseStorage = FirebaseStorage.getInstance()
     private val storageReference: StorageReference = storage.getReference()
@@ -70,25 +70,25 @@ class EditProductActivity : DrawerActivity() {
         btnGallery = editProductBinding.btnGalleryImgEdit
         btnEditProd = editProductBinding.btnEditProduct
 
-        val bundle = Bundle()
+        val bundle = intent.extras
 
         // Initialize repositories with context
         userRepository = UserRepository(this)
         productRepository = ProductRepository(this)
 
-        productRepository.getProduct(bundle.getString("ID").toString(), onSuccess = { product ->
+        productRepository.getProduct(bundle?.getString("ID").toString(), onSuccess = { product ->
             editTxtProdName.setText(product.name)
             editTxtProdDescription.setText(product.description)
             editTxtPrice.setText(String.format(Locale.US, "%,.2f", product.price))
             editTxtProdCategory.setText(product.category)
-            editTxtQuantity.setText(product.quantity)
+            editTxtQuantity.setText(String.format(Locale.US, "%d", product.quantity))
 
             val img = storageReference.child("ProductImg/" + product.imgName)
             imgName = product.imgName
             img.getDownloadUrl().addOnSuccessListener(object : OnSuccessListener<Uri?> {
                 override fun onSuccess(uri: Uri?) {
                     Picasso.get().load(uri).into(imgView)
-                    if (uri != null) imgUri = uri
+                    if (uri != null && isImageChanged) imgUri = uri
                 }
             })
         }, onError = { error ->
@@ -141,10 +141,9 @@ class EditProductActivity : DrawerActivity() {
                 ).show()
             } else {
                 uploadEditedProduct(imgName, imgUri)
-                val username = StoredDataHelper.get(this)
 
                 val updatedProduct = Product(
-                    bundle.getString("ID"),
+                    null,
                     editTxtProdName.text.toString(),
                     editTxtProdDescription.text.toString(),
                     editTxtPrice.text.toString().toDouble(),
@@ -154,30 +153,15 @@ class EditProductActivity : DrawerActivity() {
                 )
                 // Update product in database
                 productRepository.updateProduct(
-                    bundle.getInt("ID").toString(),
+                    bundle?.getString("ID").toString(),
                     updatedProduct,
                     onSuccess = { product ->
-                        Toast.makeText(this, "Product updated", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Product updated.", Toast.LENGTH_SHORT).show()
                     },
                     onError = { error ->
                         Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
                     })
-
-                // Add to transaction if a product is sold
-                if (status == "Sold") {
-                    val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-                    val date = Date()
-                    val transactionDate = formatter.format(date)
-                    val transaction = Transaction(
-                        transactionDate,
-                        editTxtProdName.text.toString(),
-                        imgName, username
-                    )
-                    transaction.setAmount(1)
-                    // TODO: handle add transaction
-//                        databaseHelper.addTransaction(transaction)
-                }
-
+                // TODO: Handle financial report here
             }
             startActivity(Intent(this, ManageProductActivity::class.java))
         }
@@ -260,6 +244,7 @@ class EditProductActivity : DrawerActivity() {
                 val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
                 mediaScanIntent.data = imgUri
                 this.sendBroadcast(mediaScanIntent)
+                isImageChanged = true
             } else {
                 Toast.makeText(this, "Creating file failed", Toast.LENGTH_SHORT).show()
             }
@@ -267,21 +252,22 @@ class EditProductActivity : DrawerActivity() {
 
         if (requestCode == galleryRequestCode) {
             if (resultCode == RESULT_OK) {
-                imgUri = data?.data!!
+                imgUri = data?.data
                 val time = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
 
                 val resolver = contentResolver
                 val mime = MimeTypeMap.getSingleton()
-                val extension = mime.getExtensionFromMimeType(resolver.getType(imgUri))
+                val extension = mime.getExtensionFromMimeType(resolver.getType(imgUri!!))
 
                 imgName = "JPEG_$time.$extension"
                 imgView.setImageURI(imgUri)
+                isImageChanged = true
             }
         }
     }
 
-    private fun uploadEditedProduct(imgName: String?, imgUri: Uri) {
+    private fun uploadEditedProduct(imgName: String?, imgUri: Uri?) {
         val img = storageReference.child("ProductImg/$imgName")
-        img.putFile(imgUri)
+        if (imgUri != null) img.putFile(imgUri)
     }
 }

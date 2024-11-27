@@ -33,12 +33,17 @@ class ItemRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.textViewName.text = productList[position].name
+        holder.textViewDescription.text =
+            String.format("Description: %s", productList[position].description)
         holder.textViewPrice.text =
-            String.format(Locale.US, "%,.2f", productList[position].price)
+            String.format(Locale.US, "Price: $%,.2f", productList[position].price)
         val img = storageReference.child("ProductImg/" + productList[position].imgName)
         img.getDownloadUrl().addOnSuccessListener { uri: Uri? ->
             Picasso.get().load(uri).into(holder.imageView)
         }
+        holder.textViewCategory.text = String.format("Category: %s", productList[position].category)
+        holder.textViewQuantity.text =
+            String.format(Locale.US, "Quantity: %d", productList[position].quantity)
     }
 
     override fun getItemCount(): Int = productList.size
@@ -46,7 +51,10 @@ class ItemRecyclerViewAdapter(
     inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView? = view.findViewById(R.id.imgViewRecyclerImg)
         val textViewName: TextView = view.findViewById(R.id.txtViewRecyclerName)
+        val textViewDescription: TextView = view.findViewById(R.id.txtViewRecyclerDescription)
         val textViewPrice: TextView = view.findViewById(R.id.txtViewRecyclerPrice)
+        val textViewCategory: TextView = view.findViewById(R.id.txtViewRecyclerCategory)
+        val textViewQuantity: TextView = view.findViewById(R.id.txtViewRecyclerQuantity)
 
         init {
             view.setOnClickListener {
