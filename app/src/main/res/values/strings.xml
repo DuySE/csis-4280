@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">WMS</string>
-    <string name="txtViewNoUsers">No users found!</string>
+    <string name="txtNoUserFound">No user found</string>
     <!--Will update with database items in the future!-->
 
     <string name="txtAddProduct">Add a new product</string>
     <string name="txtAddAnImage">Add an image</string>
-    <string name="txtNewImg">New Image</string>
-    <string name="txtGalleryImg">Choose from Gallery</string>
+    <string name="txtNewImg">Camera</string>
+    <string name="txtGalleryImg">Choose from Library</string>
     <string name="txtName">Name</string>
     <string name="txtDescription">Description</string>
     <string name="txtPrice">Price (in CAD)</string>
@@ -52,7 +52,6 @@
     <string name="txtViewAddress_Profile">Address:</string>
     <string name="txtNone">None</string>
     <string name="textPhone">Phone Number*</string>
-    <string name="txtNewPfp">New Profile Image</string>
     <string name="txtFromGallery">Pick from Gallery</string>
     <string name="txtEditYourProduct">Edit Your Product</string>
     <string name="txtStatus">Status</string>
@@ -68,7 +67,7 @@
     <string name="navDrawOpen">Open Navigation Drawer</string>
     <string name="navDrawClose">Close Navigation Drawer</string>
     <string name="navLogoDesc">Logo</string>
-    <string name="menuChatActivity">Messages</string>
+    <string name="menuManageUserActivity">Manage Users</string>
     <string name="menuNewProductActivity">New Product</string>
     <string name="menuPreviousActivity">Back</string>
     <string name="menuLogout">Logout</string>
@@ -79,10 +78,12 @@
     <string name="txtCurrentPassword">Enter current password*</string>
     <string name="txtAsteriskField">(All the fields with * must be entered)</string>
     <string name="txtEmptyString" />
-    <string name="txtNoProductFound">No Product Found</string>
+    <string name="txtNoProductFound">No product found</string>
     <string name="menuManageProductActivity">Manage Products</string>
-    <string name="menuTransactionHistoryActivity">Transaction History</string>
+    <string name="menuFinancialReportActivity">Financial Reporting</string>
     <string name="txtAlreadyHaveAccount">Already have an account? Login!</string>
     <string name="txtSelectProducts">Select Products</string>
     <string name="soldBy">Sold by: %s</string>
+    <string name="txtRangeSlider">Filter by price</string>
+    <string name="isAvailable">In stock</string>
 </resources>

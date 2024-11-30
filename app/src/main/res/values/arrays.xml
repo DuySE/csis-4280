@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="price_initial_values">
+        <item>1</item> <!-- Initial minimum price -->
+        <item>2000</item> <!-- Initial maximum price -->
+    </array>
+</resources>

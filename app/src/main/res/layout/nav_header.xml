@@ -14,6 +14,6 @@
         android:layout_height="match_parent"
         android:background="#fafafa"
         android:contentDescription="@string/navLogoDesc"
-        app:srcCompat="@drawable/marketeerlogo" />
+        app:srcCompat="@drawable/marketeer_logo" />
 
 </LinearLayout>

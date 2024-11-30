@@ -24,43 +24,43 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ProductInfoActivity"
+            android:name=".activities.ProductInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".ManageProductActivity"
+            android:name=".activities.ManageProductActivity"
             android:exported="false" />
         <activity
-            android:name=".TransactionActivity"
+            android:name=".activities.FinancialReportActivity"
             android:exported="false" />
         <activity
-            android:name=".HomepageActivity"
+            android:name=".activities.HomepageActivity"
             android:exported="false" />
         <activity
-            android:name=".DrawerActivity"
+            android:name=".activities.DrawerActivity"
             android:exported="false" />
         <activity
-            android:name=".EditProductActivity"
+            android:name=".activities.EditProductActivity"
             android:exported="false" />
         <activity
-            android:name=".MyProfileEditActivity"
+            android:name=".activities.MyProfileEditActivity"
             android:exported="false" />
         <activity
-            android:name=".MyProfileActivity"
+            android:name=".activities.MyProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".NewProductActivity"
+            android:name=".activities.NewProductActivity"
             android:exported="false" />
         <activity
-            android:name=".UserListActivity"
+            android:name=".activities.ManageUserActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

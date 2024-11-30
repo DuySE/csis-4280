@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyProfileActivity">
+    tools:context=".activities.MyProfileActivity">
 
     <Button
         android:id="@+id/btnEditProfile"
@@ -24,7 +24,7 @@
         android:layout_marginTop="64dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/defaultpfp" />
+        app:srcCompat="@drawable/default_profile_photo" />
 
     <TextView
         android:id="@+id/txtViewUsername"
@@ -52,7 +52,7 @@
         android:id="@+id/txtViewAddress"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="128dp"
+        android:layout_marginStart="128dp"
         android:layout_marginTop="32dp"
         android:maxWidth="250dp"
         android:text="@string/txtNone"

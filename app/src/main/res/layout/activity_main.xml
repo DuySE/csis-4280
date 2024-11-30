@@ -4,35 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
+    <!-- SearchView -->
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="8dp"
+        android:queryHint="Search Here"
+        app:layout_constraintEnd_toStartOf="@id/priceRangeSlider"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Range Slider -->
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/priceRangeSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/txtRangeSlider"
+        app:layout_constraintEnd_toStartOf="@id/availabilityCheckbox"
+        app:layout_constraintStart_toEndOf="@id/searchView"
         app:layout_constraintTop_toTopOf="parent"
-        app:queryHint="Search Here">
+        app:values="@array/price_initial_values" />
 
-    </androidx.appcompat.widget.SearchView>
+    <!-- Checkbox for Availability -->
+    <CheckBox
+        android:id="@+id/availabilityCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/isAvailable"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/priceRangeSlider"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- TextView for No Products Found -->
     <TextView
         android:id="@+id/textViewNoProductFound"
-        android:layout_width="175dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:text="@string/txtNoProductFound"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintTop_toBottomOf="@id/searchView" />
 
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewItems"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/textViewNoProductFound" />
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewNoProductFound" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

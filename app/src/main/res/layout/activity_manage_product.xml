@@ -4,51 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ManageProductActivity">
+    tools:context=".activities.ManageProductActivity">
 
+    <!-- Search View -->
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:queryHint="Search Here"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:queryHint="Search Here">
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.appcompat.widget.SearchView>
-
+    <!-- TextView for No Product Found -->
     <TextView
         android:id="@+id/textViewNoProductFound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:text="@string/txtNoProductFound"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintTop_toBottomOf="@id/searchView" />
 
+    <!-- RecyclerView for Product List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewItems"
         android:layout_width="0dp"
-        android:layout_height="550dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@id/startNewProdActivityImgView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewNoProductFound">
+        app:layout_constraintTop_toBottomOf="@id/textViewNoProductFound" />
 
-    </androidx.recyclerview.widget.RecyclerView>
-
+    <!-- Floating Button to Add New Product -->
     <ImageView
         android:id="@+id/startNewProdActivityImgView"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:contentDescription="@string/txtAddNewProduct"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
