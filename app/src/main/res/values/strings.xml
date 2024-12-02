@@ -86,4 +86,6 @@
     <string name="soldBy">Sold by: %s</string>
     <string name="txtRangeSlider">Filter by price</string>
     <string name="isAvailable">In stock</string>
+    <string name="txtAddCart">Add Cart</string>
+    <string name="txtCheckout">Chackout</string>
 </resources>
