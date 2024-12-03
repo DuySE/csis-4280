@@ -59,15 +59,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtViewProdPriceInfo" />
 
-    <TextView
-        android:id="@+id/txtViewProdQuantityInfo"
-        android:layout_width="300dp"
+<!--    <TextView-->
+<!--        android:id="@+id/txtViewProdQuantityInfo"-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="32dp"-->
+<!--        android:textAlignment="viewEnd"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/txtViewProdCategoryInfo" />-->
+    <NumberPicker
+        android:id="@+id/numPickerQuantity"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="32dp"
-        android:textAlignment="viewEnd"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtViewProdCategoryInfo" />
+
+    <Button
+        android:id="@+id/btnAddCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/txtAddCart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/numPickerQuantity"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewProdCategoryInfo" />
+
+    <Button
+        android:id="@+id/btnCheckout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/txtCheckout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAddCart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
