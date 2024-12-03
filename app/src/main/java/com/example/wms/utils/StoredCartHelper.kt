@@ -2,40 +2,42 @@ package com.example.wms.utils
 
 import android.content.Context
 import com.example.wms.models.Cart
+import com.example.wms.models.Product
 import com.google.gson.Gson
 
 object StoredCartHelper {
-    fun save(context: Context, cartItems: List<Cart>) {
+    fun save(context: Context, cart: Cart) {
         val sharedPreferences = context.getSharedPreferences("application", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
-        if (cartItems != null) {
-            val json = Gson().toJson(cartItems)
-            editor.putString("cartItem", json)
+        if (cart != null) {
+            val json = Gson().toJson(cart)
+            editor.putString("cart", json)
         } else {
-            editor.remove("cartItem")
+            editor.remove("cart")
         }
 
         editor.apply()
     }
 
-    fun get(context: Context): List<Cart> {
+    fun get(context: Context): Cart? {
         val sharedPreferences = context.getSharedPreferences("application", Context.MODE_PRIVATE)
-        val value = sharedPreferences.getString("cartItem", "[]")
-        return Gson().fromJson(value, Array<Cart>::class.java).toList()
+        val value = sharedPreferences.getString("cart", "")
+        if (value == null) {
+            return null
+        }
+        return Gson().fromJson(value, Cart::class.java)
     }
 
-    fun modify(context: Context, cart: Cart) {
-        val cartItems = get(context).toMutableList()
-        val index = cartItems.indexOfFirst { it.productId == cart.productId }
+    fun modify(context: Context, updatedItem: Product) {
+        val cart = get(context)
 
-        if (index != -1) {
-            cartItems[index]  = cart
-        } else {
-            cartItems.add(cart)
+        val newProductList = cart!!.productList!!.toMutableList()
+        newProductList!!.find { it.id == updatedItem.id }?.let {
+            newProductList[newProductList.indexOf(it)] = updatedItem
         }
 
-        save(context, cartItems)
+        save(context, cart!!.copy(productList = newProductList))
     }
 
     fun clear(context: Context) {

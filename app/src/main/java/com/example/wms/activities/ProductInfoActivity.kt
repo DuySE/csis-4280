@@ -53,25 +53,32 @@ class ProductInfoActivity : DrawerActivity() {
             })
         }, onError = { error -> Toast.makeText(this, error, Toast.LENGTH_SHORT).show() })
 
-        productInfoBinding.btnAddCart.setOnClickListener{
-            val selectedQuantity = numPickerQuantity.value;
-            var cart: Cart?
-            if (productId != null && selectedQuantity > 0) {
-                cart = Cart(productId!!, selectedQuantity)
-                val cartItems = StoredCartHelper.get(this)
-                if (cartItems.isEmpty()) {
-                    val updatedCartItems = mutableListOf(cart)
-                    StoredCartHelper.save(this, updatedCartItems)
-                } else {
-                    val updatedCartItems = cartItems.toMutableList()
-                    updatedCartItems.add(cart)
-                    StoredCartHelper.save(this, updatedCartItems)
-                }
-                Toast.makeText(this, "Success to add item to cart", Toast.LENGTH_LONG).show()
+        productInfoBinding.btnAddCart.setOnClickListener {
+            val selectedQuantity = numPickerQuantity.value
 
-            } else {
-                Toast.makeText(this, "Failed to add item to a cart.", Toast.LENGTH_LONG).show()
-            }
+            repository.getProduct(productId.toString(),
+                onSuccess = { product ->
+                    val newProduct = product.copy(quantity = selectedQuantity)
+
+                    var cart: Cart? = StoredCartHelper.get(this)
+                    if (cart == null) {
+                        cart = Cart()
+                        cart.productList = mutableListOf()
+                        cart.productList.add(newProduct)
+                    } else {
+                        val existingProductIndex = cart.productList.indexOfFirst { it.id == newProduct.id }
+                        if (existingProductIndex != -1) {
+                            cart.productList[existingProductIndex] = newProduct
+                        } else {
+                            cart.productList.add(newProduct)
+                        }
+                    }
+
+                    StoredCartHelper.save(this, cart)
+                    Toast.makeText(this, "Product added to cart", Toast.LENGTH_SHORT).show()
+                },
+                onError = { error -> Toast.makeText(this, error, Toast.LENGTH_SHORT).show() }
+            )
         }
 
         productInfoBinding.btnCheckout.setOnClickListener{
