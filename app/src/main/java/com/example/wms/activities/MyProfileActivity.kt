@@ -8,7 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.wms.apis.UserRepository
 import com.example.wms.databinding.ActivityMyProfileBinding
-import com.example.wms.utils.StoredDataHelper
+import com.example.wms.helpers.StoredDataHelper
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import java.util.Timer

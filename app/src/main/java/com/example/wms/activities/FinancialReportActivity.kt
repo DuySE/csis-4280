@@ -31,14 +31,11 @@ class FinancialReportActivity : DrawerActivity() {
         // Initialize text view
         txtViewReportSummary = financialReportBinding.txtReportSummary
 
-        // Initialize transactions list
-        transactions = mutableListOf()
-
-        // Setup an adapter for transactions
-        transactionAdapter = TransactionAdapter(transactions)
-
         // Initialize transaction repository with context
         transactionRepository = TransactionRepository(this)
+
+        transactions = mutableListOf<Transaction>()
+        transactionAdapter = TransactionAdapter(transactions)
 
         // Filter by date
         val editTextDate: EditText = financialReportBinding.editTextDate
@@ -55,14 +52,13 @@ class FinancialReportActivity : DrawerActivity() {
                         "%04d-%02d-%02d", year1, monthOfYear + 1, dayOfMonth
                     )
                     editTextDate.setText(selectedDate)
-                    transactionRepository.getAllTransactions(
+                    transactionRepository.getTransaction(
                         editTextDate.text.toString(), onSuccess = { data ->
-                            this.transactions = data.toMutableList()
+                            transactionAdapter.setFilteredList(data.toMutableList())
+                            txtViewReportSummary.text = generateReport(transactions)
                         }, onError = { error ->
                             Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
                         })
-                    transactionAdapter.setFilteredList(transactions)
-                    txtViewReportSummary.text = generateReport(transactions)
                 }, year, month, day
             )
             datePickerDialog.show()
@@ -80,26 +76,21 @@ class FinancialReportActivity : DrawerActivity() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                filterList(newText, transactions)
+                filterList(newText)
                 return true
             }
         })
     }
 
-    private fun filterList(text: String, transactions: MutableList<Transaction>) {
-        val filteredList: MutableList<Transaction> = transactions.filter { transaction ->
-            transaction.name.lowercase(Locale.getDefault())
+    private fun filterList(text: String) {
+        val filteredList: MutableList<Transaction> = transactions.filter { product ->
+            product.name.lowercase(Locale.getDefault())
                 .contains(text.lowercase(Locale.getDefault()))
         }.toMutableList()
-        if (filteredList.isEmpty()) Toast.makeText(
-            this,
-            "Transaction not found.",
-            Toast.LENGTH_SHORT
-        ).show()
-        else transactionAdapter.setFilteredList(filteredList)
+        transactionAdapter.setFilteredList(filteredList)
     }
 
-    private fun generateReport(transactions: List<Transaction>): String {
+    private fun generateReport(transactions: MutableList<Transaction>): String {
         val totalAmount = transactions.sumOf { it.price }
         val averageAmount = transactions.map { it.price }.average()
         val count = transactions.size

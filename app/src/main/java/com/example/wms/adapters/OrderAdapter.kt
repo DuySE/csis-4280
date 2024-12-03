@@ -2,92 +2,99 @@ package com.example.wms.adapters
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wms.apis.ProductRepository
-import com.example.wms.databinding.OrderItemBinding
+import com.example.wms.R
+import com.example.wms.helpers.StoredCartHelper
 import com.example.wms.models.Cart
 import com.example.wms.models.Product
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
+import java.util.Locale
 
-class OrderAdapter (
-    private val productList: MutableList<Product>,
+class OrderAdapter(
+    private var productList: MutableList<Product>,
+    private val onQuantityChange: (List<Product>) -> Unit,
     private val context: Context
-): RecyclerView.Adapter<OrderAdapter.OrderViewHolder?>() {
+) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
-        val binding = OrderItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return OrderViewHolder(binding)
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.order_item, parent, false)
+        return OrderViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
         val product = productList[position]
-        holder.binding.txtViewRecyclerPrice.text = product.price.toString()
-        holder.binding.txtViewRecyclerName.text = product.name
-        holder.binding.txtViewRecyclerQuantity.text = product.quantity.toString()
-        holder.binding.txtViewRecyclerDescription.text = product.description
+
+        // Set product details in the ViewHolder
+        holder.txtViewName.text = product.name
+        holder.txtViewDescription.text = product.description
+        holder.txtViewPrice.text = String.format(Locale.US, "$%,.2f", product.price)
+
+        // Initialize quantity to 0
+        holder.txtViewQuantity.text = "1"
+
+        // Load image from Firebase Storage
         val storage = FirebaseStorage.getInstance()
         val storageReference = storage.getReference()
         val img = storageReference.child("ProductImg/" + product.imgName)
         img.getDownloadUrl().addOnSuccessListener(OnSuccessListener { uri: Uri? ->
-            Picasso.get().load(uri).into(holder.binding.itemImage)
+            Picasso.get().load(uri).into(holder.imgView)
         })
-    }
 
-    override fun getItemCount(): Int {
-        return productList.size
-    }
+        // Increase quantity
+        holder.btnIncreaseQty.setOnClickListener {
+            val currentQty = holder.txtViewQuantity.text.toString().toIntOrNull() ?: 0
+            val newQty = currentQty + 1
+            holder.txtViewQuantity.text = String.format(Locale.US, "%d", newQty)
+            updateProductQuantity(product.id!!, newQty)
+            onQuantityChange(productList) // Notify activity
+        }
 
-    inner class OrderViewHolder(private val _binding: OrderItemBinding): RecyclerView.ViewHolder(_binding.root) {
-        public val binding = _binding
-        private val productRepository = ProductRepository(context)
-        private var maxQty = 0
-        private var currentQty = 0
-        private var strCurrentQty = ""
-
-        init {
-            if (adapterPosition != RecyclerView.NO_POSITION) {
-                val productId = productList[adapterPosition].id!!.toString()
-                productRepository.getProduct(productId,
-                    onSuccess = {product -> maxQty = product.quantity},
-                    onError = {error -> Toast.makeText(context, error, Toast.LENGTH_SHORT).show()}
-                )
-
-                binding.btnDecreaseQuantity.setOnClickListener{
-                    strCurrentQty = binding.txtViewRecyclerQuantity.text.toString()
-                    currentQty = if (strCurrentQty.isNotEmpty()) strCurrentQty.toInt() else 0
-                    if (currentQty > 0) {
-                        currentQty--
-                        binding.txtViewRecyclerQuantity.text = currentQty.toString()
-                        updateProductQuantity(productId, currentQty)
-                    }
-                }
-
-                binding.btnIncreaseQuantity.setOnClickListener {
-                    strCurrentQty = binding.txtViewRecyclerQuantity.text.toString()
-                    currentQty = if (strCurrentQty.isNotEmpty()) strCurrentQty.toInt() else 0
-                    if (currentQty < maxQty) {
-                        currentQty++
-                        binding.txtViewRecyclerQuantity.text = currentQty.toString()
-                        updateProductQuantity(productId, currentQty)
-                    }
-                }
+        // Decrease quantity
+        holder.btnDecreaseQty.setOnClickListener {
+            val currentQty = holder.txtViewQuantity.text.toString().toIntOrNull() ?: 0
+            if (currentQty > 0) {
+                val newQty = currentQty - 1
+                holder.txtViewQuantity.text = String.format(Locale.US, "%d", newQty)
+                updateProductQuantity(product.id!!, newQty)
+                onQuantityChange(productList) // Notify activity
             }
         }
     }
 
+    override fun getItemCount(): Int = productList.size
 
+    inner class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val imgView: ImageView = view.findViewById<ImageView>(R.id.itemImage)
+        val txtViewName: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerName)
+        val txtViewDescription: TextView =
+            view.findViewById<TextView>(R.id.txtViewRecyclerDescription)
+        val txtViewPrice: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerPrice)
+        val txtViewQuantity: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerQuantity)
+        val btnIncreaseQty: Button = view.findViewById<Button>(R.id.btnIncreaseQuantity)
+        val btnDecreaseQty: Button = view.findViewById<Button>(R.id.btnDecreaseQuantity)
+    }
 
-    fun updateProductQuantity(productId: String, newQty: Int) {
-        productList.forEachIndexed { index, product ->
+    private fun updateProductQuantity(productId: String, newQty: Int) {
+        val updatedList = productList.map { product ->
             if (product.id == productId) {
-                productList[index] = product.copy(quantity = newQty)
-                return@forEachIndexed
-            }
-        }
+                if (newQty == 0) null // Mark for removal
+                else product.copy(quantity = newQty)
+            } else product
+        }.filterNotNull() // Remove null values (marked for deletion)
+        productList.clear()
+        productList.addAll(updatedList)
+
+        // Save the updated cart
+        val updatedCart = Cart(productList)
+        StoredCartHelper.save(context, updatedCart)
     }
 }

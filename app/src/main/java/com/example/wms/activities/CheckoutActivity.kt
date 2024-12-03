@@ -1,46 +1,56 @@
 package com.example.wms.activities
 
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wms.R
 import com.example.wms.adapters.OrderAdapter
 import com.example.wms.apis.ProductRepository
+import com.example.wms.apis.TransactionRepository
 import com.example.wms.databinding.ActivityCheckoutBinding
+import com.example.wms.helpers.StoredCartHelper
 import com.example.wms.models.Cart
 import com.example.wms.models.Product
-import com.example.wms.utils.StoredCartHelper
+import com.example.wms.models.Transaction
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class CheckoutActivity : AppCompatActivity() {
+class CheckoutActivity : DrawerActivity() {
     private lateinit var binding: ActivityCheckoutBinding
     private var cart: Cart? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCheckoutBinding.inflate(layoutInflater)
-
-        enableEdgeToEdge()
         setContentView(binding.root)
+        allocateActivityTitle("Checkout")
 
         cart = StoredCartHelper.get(this)
         if (cart?.productList?.isNotEmpty() == true) {
-            val adapter = OrderAdapter(cart!!.productList, this)
+            val adapter = OrderAdapter(cart!!.productList, { updatedProductList ->
+                updateTotalPrice(updatedProductList)
+            }, this)
             binding.recyclerViewOrders.adapter = adapter
             binding.recyclerViewOrders.layoutManager = LinearLayoutManager(this)
-            updateTotalPrice(cart!!)
+            updateTotalPrice(cart!!.productList)
+            binding.txtViewCartEmpty.visibility = View.GONE
+        } else {
+            // Show empty cart message
+            binding.txtViewCartEmpty.text = getString(R.string.txtCartEmpty)
+            binding.txtViewCartEmpty.visibility = View.VISIBLE
+            // Hide order button
+            binding.btnConfirmOrder.visibility = View.GONE
         }
 
         binding.btnConfirmOrder.setOnClickListener {
             val productRepository = ProductRepository(this)
+            val transactionRepository = TransactionRepository(this)
 
             if (cart != null && cart!!.productList.isNotEmpty()) {
                 cart!!.productList.forEach { item ->
-                    val product = productRepository.getProduct(item.id.toString(),
+                    productRepository.getProduct(item.id.toString(),
                         onSuccess = { product ->
                             product.let {
                                 if (it.quantity > item.quantity) {
@@ -51,26 +61,54 @@ class CheckoutActivity : AppCompatActivity() {
                                     )
 
                                     productRepository.updateProduct(
-                                        updatedProduct.id.toString(),
+                                        product.id.toString(),
                                         updatedProduct,
                                         onSuccess = {
                                             Toast.makeText(
                                                 this,
-                                                "Product updated",
+                                                "Product updated.",
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         },
                                         onError = {
                                             Toast.makeText(
                                                 this,
-                                                "Error updating product",
+                                                "Error updating product.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        })
+                                    // Add product to transaction list
+                                    val formatter =
+                                        SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                                    val date = Date()
+                                    val transactionDate: String = formatter.format(date)
+                                    val newTransaction = Transaction(
+                                        null,
+                                        it.imgName,
+                                        it.name,
+                                        it.price,
+                                        transactionDate
+                                    )
+                                    transactionRepository.addTransaction(
+                                        newTransaction,
+                                        transactionDate,
+                                        onSuccess = {
+                                            Toast.makeText(
+                                                this,
+                                                "Transaction added.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }, onError = { error ->
+                                            Toast.makeText(
+                                                this,
+                                                error,
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         })
                                 }
                             }
                         }, onError = {
-                            Toast.makeText(this, "Error updating database", Toast.LENGTH_SHORT)
+                            Toast.makeText(this, "Error updating database.", Toast.LENGTH_SHORT)
                                 .show()
                         })
                 }
@@ -78,11 +116,13 @@ class CheckoutActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateTotalPrice(cart: Cart) {
-        var total = 0.0
-        for (product in cart.productList) {
-            total += product.price * product.quantity
-        }
-        binding.tvTotal.text = total.toString()
+    private fun updateTotalPrice(productList: List<Product>) {
+        var subTotal = 0.0
+        for (product in productList) subTotal += product.price * product.quantity
+        val tax = subTotal * 0.05
+        val total = subTotal + tax
+        binding.tvSubTotal.text = String.format(Locale.US, "Subtotal: $%,.2f", total)
+        binding.tvTax.text = String.format(Locale.US, "Tax: $%,.2f", tax)
+        binding.tvTotal.text = String.format(Locale.US, "Total: $%,.2f", total)
     }
 }

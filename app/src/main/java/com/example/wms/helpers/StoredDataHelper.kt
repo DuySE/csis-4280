@@ -1,4 +1,4 @@
-package com.example.wms.utils
+package com.example.wms.helpers
 
 import android.content.Context
 import java.util.Locale

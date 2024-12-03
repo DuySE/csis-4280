@@ -66,6 +66,7 @@
     <string name="navDrawClose">Close Navigation Drawer</string>
     <string name="navLogoDesc">Logo</string>
     <string name="menuManageUserActivity">Manage Users</string>
+    <string name="menuCheckoutActivity">Checkout</string>
     <string name="menuNewProductActivity">New Product</string>
     <string name="menuPreviousActivity">Back</string>
     <string name="menuLogout">Logout</string>
@@ -84,11 +85,10 @@
     <string name="soldBy">Sold by: %s</string>
     <string name="txtRangeSlider">Filter by price</string>
     <string name="isAvailable">In stock</string>
-    <string name="txtAddCart">Add Cart</string>
-    <string name="txtCheckout">Chackout</string>
+    <string name="txtAddCart">Add To Cart</string>
     <string name="txtMinus">-</string>
     <string name="txtPlus">+</string>
-    <string name="txtConfirm">Confirm</string>
+    <string name="txtCartEmpty">Your cart is empty</string>
     <string name="transaction_history">Transaction History</string>
     <string name="filter_by_date">Filter by date</string>
     <string name="txt_report_summary">Summary</string>

@@ -1,4 +1,4 @@
-package com.example.wms.utils
+package com.example.wms.helpers
 
 import android.content.Context
 import com.example.wms.models.Cart
@@ -32,12 +32,21 @@ object StoredCartHelper {
     fun modify(context: Context, updatedItem: Product) {
         val cart = get(context)
 
-        val newProductList = cart!!.productList!!.toMutableList()
-        newProductList!!.find { it.id == updatedItem.id }?.let {
+        val newProductList = cart!!.productList.toMutableList()
+        newProductList.find { it.id == updatedItem.id }?.let {
             newProductList[newProductList.indexOf(it)] = updatedItem
         }
 
-        save(context, cart!!.copy(productList = newProductList))
+        save(context, cart.copy(productList = newProductList))
+    }
+
+    fun remove(context: Context, productId: String) {
+        val cart = get(context) ?: return // Return early if the cart doesn't exist
+
+        val newProductList = cart.productList.filter { it.id != productId }.toMutableList()
+
+        // Save the updated cart
+        save(context, cart.copy(productList = newProductList))
     }
 
     fun clear(context: Context) {

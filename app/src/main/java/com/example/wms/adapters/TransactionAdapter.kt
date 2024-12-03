@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso
 import java.util.Locale
 
 class TransactionAdapter(
-    private var transactionList: List<Transaction>
+    private var transactionList: MutableList<Transaction>
 ) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
     private val storage: FirebaseStorage = FirebaseStorage.getInstance()
     private val storageReference: StorageReference = storage.getReference()
