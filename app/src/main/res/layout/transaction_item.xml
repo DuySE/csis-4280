@@ -3,12 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/txtViewTransactionProductName"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:layout_weight="1" />
-
     <ImageView
         android:id="@+id/productImage"
         android:layout_width="0dp"
@@ -17,7 +11,13 @@
         android:contentDescription="@string/productImage" />
 
     <TextView
-        android:id="@+id/txtViewTransactionDate"
+        android:id="@+id/txtViewTransactionProductName"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/txtViewTransactionPrice"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_weight="1" />

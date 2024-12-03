@@ -29,7 +29,6 @@ class ProductInfoActivity : DrawerActivity() {
         val txtViewDescription = productInfoBinding.txtViewProdDescriptionInfo
         val txtViewPrice = productInfoBinding.txtViewProdPriceInfo
         val txtViewCategory = productInfoBinding.txtViewProdCategoryInfo
-        //val txtViewQuantity = productInfoBinding.txtViewProdQuantityInfo
         val numPickerQuantity = productInfoBinding.numPickerQuantity
 
         val bundleIn = intent.extras
@@ -41,9 +40,9 @@ class ProductInfoActivity : DrawerActivity() {
             txtViewPrice.text = String.format(Locale.US, "Price: $%,.2f", product.price)
             txtViewCategory.text = String.format("Category: %s", product.category)
             //txtViewQuantity.text = String.format(Locale.US, "%d in stock", product.quantity)
-            numPickerQuantity.setMinValue(0)
-            numPickerQuantity.setMaxValue(product.quantity)
-            numPickerQuantity.setValue(0)
+            numPickerQuantity.minValue = 0
+            numPickerQuantity.maxValue = product.quantity
+            numPickerQuantity.value = 0
 
             val storage = FirebaseStorage.getInstance()
             val storageReference = storage.getReference()
@@ -54,7 +53,7 @@ class ProductInfoActivity : DrawerActivity() {
         }, onError = { error -> Toast.makeText(this, error, Toast.LENGTH_SHORT).show() })
 
         productInfoBinding.btnAddCart.setOnClickListener{
-            val selectedQuantity = numPickerQuantity.value;
+            val selectedQuantity = numPickerQuantity.value
             var cart: Cart?
             if (productId != null && selectedQuantity > 0) {
                 cart = Cart(productId!!, selectedQuantity)
@@ -67,7 +66,7 @@ class ProductInfoActivity : DrawerActivity() {
                     updatedCartItems.add(cart)
                     StoredCartHelper.save(this, updatedCartItems)
                 }
-                Toast.makeText(this, "Success to add item to cart", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Success to add item to cart.", Toast.LENGTH_LONG).show()
 
             } else {
                 Toast.makeText(this, "Failed to add item to a cart.", Toast.LENGTH_LONG).show()

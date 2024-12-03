@@ -1,13 +1,11 @@
 package com.example.wms.adapters
 
-import android.content.DialogInterface
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wms.R
 import com.example.wms.models.Product
@@ -18,10 +16,10 @@ import java.util.Locale
 import java.util.Timer
 import java.util.TimerTask
 
-class ProductRecyclerViewAdapter(
+class CheckoutRecyclerViewAdapter(
     private var products: List<Product>,
     private var onItemClickListener: OnItemClickListener
-) : RecyclerView.Adapter<ProductRecyclerViewAdapter.MyViewHolder?>() {
+) : RecyclerView.Adapter<CheckoutRecyclerViewAdapter.MyViewHolder?>() {
 
     fun setFilteredList(filteredList: MutableList<Product>) {
         products = filteredList
@@ -30,7 +28,7 @@ class ProductRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.manage_product_item, parent, false)
+            .inflate(R.layout.order_item, parent, false)
         return MyViewHolder(view)
     }
 
@@ -40,9 +38,8 @@ class ProductRecyclerViewAdapter(
             String.format("Description: %s", products[position].description)
         holder.txtViewPrice.text =
             String.format(Locale.US, "Price: $%,.2f", products[position].price)
-        holder.txtViewCategory.text = String.format("Category: %s", products[position].category)
         holder.txtViewQuantity.text =
-            String.format(Locale.US, "Quantity: %d", products[position].quantity)
+            String.format(Locale.US, "%d", products[position].quantity)
         val imgName = products[position].imgName
         val timerTask: TimerTask = object : TimerTask() {
             override fun run() {
@@ -59,44 +56,32 @@ class ProductRecyclerViewAdapter(
         timer.schedule(timerTask, 2000)
     }
 
-    override fun getItemCount(): Int = products.size
+    override fun getItemCount(): Int {
+        return products.size
+    }
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imgView: ImageView = view.findViewById<ImageView>(R.id.imgViewRecyclerImg)
-        val imgViewEdit: ImageView = view.findViewById<ImageView>(R.id.imgViewRecyclerEdit)
-        val imgViewDelete: ImageView = view.findViewById<ImageView>(R.id.imgViewRecyclerDelete)
+        val btnInc: ImageView = view.findViewById<ImageView>(R.id.btnIncreaseQuantity)
+        val btnDec: ImageView = view.findViewById<ImageView>(R.id.btnDecreaseQuantity)
         val txtViewName: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerName)
         val txtViewDescription: TextView =
             view.findViewById<TextView>(R.id.txtViewRecyclerDescription)
         val txtViewPrice: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerPrice)
-        val txtViewCategory: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerCategory)
         val txtViewQuantity: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerQuantity)
 
         init {
-            imgViewEdit.setOnClickListener {
-                onItemClickListener.onItemEdit(adapterPosition)
+            btnInc.setOnClickListener {
+                onItemClickListener.onQuantityIncrease(adapterPosition)
             }
-            imgViewDelete.setOnClickListener {
-                val builder = AlertDialog.Builder(view.context)
-                builder.setIcon(R.drawable.ic_launcher_foreground)
-                builder.setTitle(R.string.app_name)
-                builder.setMessage("Do you want to delete this product?")
-                builder.setPositiveButton(
-                    "Yes",
-                    DialogInterface.OnClickListener { _, _ ->
-                        onItemClickListener.onItemDelete(adapterPosition)
-                    })
-                builder.setNegativeButton(
-                    "No",
-                    DialogInterface.OnClickListener { dialog: DialogInterface?, _ -> dialog!!.cancel() })
-                val alertDialog = builder.create()
-                alertDialog.show()
+            btnDec.setOnClickListener {
+                onItemClickListener.onQuantityDecrease(adapterPosition)
             }
         }
     }
 
     interface OnItemClickListener {
-        fun onItemEdit(i: Int)
-        fun onItemDelete(i: Int)
+        fun onQuantityIncrease(i: Int)
+        fun onQuantityDecrease(i: Int)
     }
 }

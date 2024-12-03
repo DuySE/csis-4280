@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">WMS</string>
     <string name="txtNoUserFound">No user found</string>
-    <!--Will update with database items in the future!-->
-
     <string name="txtAddProduct">Add a new product</string>
     <string name="txtAddAnImage">Add an image</string>
     <string name="txtNewImg">Camera</string>
@@ -57,7 +55,7 @@
     <string name="txtStatus">Status</string>
     <string name="txtAvailable">Available</string>
     <string name="txtSold">Sold</string>
-    <string name="txtEditProduct">Confirm</string>
+    <string name="txtConfirm">Confirm</string>
     <string name="txtEditProdImg">Image retrieved from firebase using file name</string>
     <string name="productImage">Product Image</string>
     <string name="menuMainActivity">Market</string>
@@ -86,6 +84,11 @@
     <string name="soldBy">Sold by: %s</string>
     <string name="txtRangeSlider">Filter by price</string>
     <string name="isAvailable">In stock</string>
-    <string name="txtAddCart">Add Cart</string>
-    <string name="txtCheckout">Chackout</string>
+    <string name="txtAddCart">Add To Cart</string>
+    <string name="txtCheckout">Checkout</string>
+    <string name="txtPlus">+</string>
+    <string name="txtMinus">-</string>
+    <string name="transaction_history">Transaction History</string>
+    <string name="filter_by_date">Filter by date</string>
+    <string name="txt_report_summary">Summary</string>
 </resources>

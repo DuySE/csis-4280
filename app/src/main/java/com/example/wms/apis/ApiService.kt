@@ -2,6 +2,8 @@ package com.example.wms.apis
 
 import com.example.wms.models.LoginRequest
 import com.example.wms.models.Product
+import com.example.wms.models.Transaction
+import com.example.wms.models.Transaction
 import com.example.wms.models.User
 import retrofit2.Call
 import retrofit2.http.Body
@@ -10,6 +12,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
     // Route to add a new user
@@ -55,4 +58,14 @@ interface ApiService {
     // Route to delete a product
     @DELETE("/products/{id}")
     fun deleteProduct(@Path("id") id: String): Call<Product>
+
+    // Route to get transactions by start date and end date
+    @GET("/transactions")
+    fun getTransactions(
+        @Query("date") date: String
+    ): Call<List<Transaction>>
+
+    // Route to add a new transaction item
+    @POST("/transactions")
+    fun addTransaction(@Body transaction: Transaction): Call<Transaction>
 }

@@ -4,7 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.wms.models.Transaction
+import com.example.wms.models.Report
 import com.example.wms.utils.StoredDataHelper.get
 import java.text.SimpleDateFormat
 import java.util.ArrayList
@@ -30,7 +30,7 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nul
     }
 
     // Table Transactions methods
-    fun addTransaction(transaction: Transaction) {
+    fun addTransaction(transaction: Report) {
         val db = this.writableDatabase
         val contentValues = ContentValues()
         val locale = Locale.getDefault()
@@ -46,8 +46,8 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nul
         db.close()
     }
 
-    fun getTransactionsChart(username: String?): MutableList<Transaction?> {
-        val transactions: MutableList<Transaction?> = ArrayList<Transaction?>()
+    fun getTransactionsChart(username: String?): MutableList<Report?> {
+        val transactions: MutableList<Report?> = ArrayList<Report?>()
         val db = this.readableDatabase
         val selection = "$COLUMN_USERNAME = ?"
         val selectionArgs = arrayOf<String?>(username)
@@ -63,9 +63,9 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nul
         val colImageName = cursor.getColumnIndex(COLUMN_IMG_NAME)
         val colTransactionDate = cursor.getColumnIndex(COLUMN_TRANSACTION_DATE)
         val colAmount = cursor.getColumnIndex(COLUMN_AMOUNT)
-        var transaction: Transaction?
+        var transaction: Report?
         while (cursor.moveToNext()) {
-            transaction = Transaction(
+            transaction = Report(
                 cursor.getString(colTransactionDate),
                 cursor.getString(colProductName), cursor.getString(colImageName), username
             )
@@ -77,8 +77,8 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nul
         return transactions
     }
 
-    fun getTransactions(username: String?, date: String?): MutableList<Transaction?> {
-        val transactions: MutableList<Transaction?> = ArrayList<Transaction?>()
+    fun getTransactions(username: String?, date: String?): MutableList<Report?> {
+        val transactions: MutableList<Report?> = ArrayList<Report?>()
         val db = this.readableDatabase
         val columns: Array<String?> = arrayOf<String?>(
             COLUMN_PRODUCT_NAME, COLUMN_IMG_NAME,
@@ -100,9 +100,9 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nul
         val colProductName = cursor.getColumnIndex(COLUMN_PRODUCT_NAME)
         val colImageName = cursor.getColumnIndex(COLUMN_IMG_NAME)
         val colTransactionDate = cursor.getColumnIndex(COLUMN_TRANSACTION_DATE)
-        var transaction: Transaction?
+        var transaction: Report?
         while (cursor.moveToNext()) {
-            transaction = Transaction(
+            transaction = Report(
                 cursor.getString(colTransactionDate),
                 cursor.getString(colProductName), cursor.getString(colImageName), username
             )
