@@ -84,10 +84,11 @@
     <string name="soldBy">Sold by: %s</string>
     <string name="txtRangeSlider">Filter by price</string>
     <string name="isAvailable">In stock</string>
-    <string name="txtAddCart">Add To Cart</string>
-    <string name="txtCheckout">Checkout</string>
-    <string name="txtPlus">+</string>
+    <string name="txtAddCart">Add Cart</string>
+    <string name="txtCheckout">Chackout</string>
     <string name="txtMinus">-</string>
+    <string name="txtPlus">+</string>
+    <string name="txtConfirm">Confirm</string>
     <string name="transaction_history">Transaction History</string>
     <string name="filter_by_date">Filter by date</string>
     <string name="txt_report_summary">Summary</string>

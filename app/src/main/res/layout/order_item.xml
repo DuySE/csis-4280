@@ -57,10 +57,12 @@
 
         <Button
             android:id="@+id/btnDecreaseQuantity"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/txtMinus"
-            android:textSize="16sp" />
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:padding="8dp" />
 
         <TextView
             android:id="@+id/txtViewRecyclerQuantity"
@@ -68,14 +70,16 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:gravity="center"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <Button
             android:id="@+id/btnIncreaseQuantity"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/txtPlus"
-            android:textSize="16sp" />
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:padding="8dp" />
     </LinearLayout>
 </LinearLayout>

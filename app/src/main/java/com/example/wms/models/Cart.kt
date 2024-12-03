@@ -1,6 +1,5 @@
 package com.example.wms.models
 
-data class Cart(
-    val productId: String,
-    val quantity: Int
+data class Cart (
+    var productList: MutableList<Product> = mutableListOf()
 )
