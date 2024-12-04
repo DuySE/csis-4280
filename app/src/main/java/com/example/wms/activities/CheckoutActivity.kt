@@ -1,5 +1,6 @@
 package com.example.wms.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -81,12 +82,16 @@ class CheckoutActivity : DrawerActivity() {
                                     val formatter =
                                         SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                                     val date = Date()
+                                    var total = binding.tvTotal.text.toString()
+                                    total = total.replace("Total: $","").trim()
+                                    total = total.replace(",", "")
+                                    val totalDouble = total.toDouble()
                                     val transactionDate: String = formatter.format(date)
                                     val newTransaction = Transaction(
                                         null,
                                         it.imgName,
                                         it.name,
-                                        it.price,
+                                        totalDouble,
                                         transactionDate
                                     )
                                     transactionRepository.addTransaction(
@@ -104,6 +109,12 @@ class CheckoutActivity : DrawerActivity() {
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         })
+
+                                    //Reset cart
+                                    StoredCartHelper.clear(this)
+
+                                    val intent = Intent(this, HomepageActivity::class.java)
+                                    startActivity(intent)
                                 }
                             }
                         }, onError = {

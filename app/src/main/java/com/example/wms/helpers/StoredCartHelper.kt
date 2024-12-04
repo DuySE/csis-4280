@@ -52,7 +52,7 @@ object StoredCartHelper {
     fun clear(context: Context) {
         val sharedPreferences = context.getSharedPreferences("application", Context.MODE_PRIVATE);
         val editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
+        editor.remove("cart")
+        editor.apply()
     }
 }

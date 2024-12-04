@@ -23,7 +23,7 @@ object StoredDataHelper {
     fun clear(context: Context) {
         val sharedPreferences = context.getSharedPreferences("application", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.clear()
+        editor.remove("username")
         editor.apply()
     }
 }
