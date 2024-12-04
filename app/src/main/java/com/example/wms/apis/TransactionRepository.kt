@@ -35,12 +35,12 @@ class TransactionRepository(context: Context) {
     }
 
     // Get all transactions by date
-    fun getTransaction(
+    fun getTransactionsByDate(
         date: String,
         onSuccess: (List<Transaction>) -> Unit,
         onError: (String) -> Unit
     ) {
-        apiService.getTransaction(date).enqueue(object : Callback<List<Transaction>> {
+        apiService.getTransactionsByDate(date).enqueue(object : Callback<List<Transaction>> {
             override fun onResponse(
                 call: Call<List<Transaction>>,
                 response: Response<List<Transaction>>

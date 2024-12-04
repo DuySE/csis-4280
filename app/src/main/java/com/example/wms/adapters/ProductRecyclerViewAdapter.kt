@@ -63,8 +63,8 @@ class ProductRecyclerViewAdapter(
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imgView: ImageView = view.findViewById<ImageView>(R.id.imgViewRecyclerImg)
-        val imgViewEdit: ImageView = view.findViewById<ImageView>(R.id.imgViewRecyclerEdit)
-        val imgViewDelete: ImageView = view.findViewById<ImageView>(R.id.imgViewRecyclerDelete)
+        val imgViewEdit: ImageView = view.findViewById<ImageView>(R.id.btnEditProfile)
+        val imgViewDelete: ImageView = view.findViewById<ImageView>(R.id.btnDeleteProfile)
         val txtViewName: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerName)
         val txtViewDescription: TextView =
             view.findViewById<TextView>(R.id.txtViewRecyclerDescription)

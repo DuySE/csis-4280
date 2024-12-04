@@ -60,9 +60,7 @@ interface ApiService {
 
     // Route to get transactions by date
     @GET("/transactions")
-    fun getTransaction(
-        @Query("date") date: String
-    ): Call<List<Transaction>>
+    fun getTransactionsByDate(@Query("date") date: String): Call<List<Transaction>>
 
     // Route to add a new transaction item
     @POST("/transactions")

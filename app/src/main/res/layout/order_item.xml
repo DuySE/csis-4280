@@ -14,7 +14,7 @@
         android:padding="12dp">
 
         <ImageView
-            android:id="@+id/itemImage"
+            android:id="@+id/productImage"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginEnd="16dp"
@@ -29,7 +29,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtViewRecyclerName"
+                android:id="@+id/productName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -40,7 +40,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtViewRecyclerDescription"
+                android:id="@+id/productDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -50,7 +50,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/txtViewRecyclerPrice"
+                android:id="@+id/productPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -65,7 +65,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnDecreaseQuantity"
+                android:id="@+id/btnDecreaseQty"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:text="@string/txtMinus"
@@ -73,7 +73,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/txtViewRecyclerQuantity"
+                android:id="@+id/productQty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
@@ -82,7 +82,7 @@
                 android:textSize="16sp" />
 
             <Button
-                android:id="@+id/btnIncreaseQuantity"
+                android:id="@+id/btnIncreaseQty"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:text="@string/txtPlus"

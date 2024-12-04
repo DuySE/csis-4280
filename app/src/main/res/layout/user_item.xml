@@ -15,7 +15,7 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/profileImg"
+            android:id="@+id/userImage"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginBottom="8dp"
@@ -23,7 +23,7 @@
             android:scaleType="centerCrop" />
 
         <TextView
-            android:id="@+id/txtViewRecyclerUsername"
+            android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -32,7 +32,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtViewRecyclerAddress"
+            android:id="@+id/userAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -40,7 +40,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/txtViewRecyclerPhone"
+            android:id="@+id/userPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -53,14 +53,14 @@
             android:layout_gravity="top|end">
             <!-- Edit Icon -->
             <ImageView
-                android:id="@+id/imgViewRecyclerEdit"
+                android:id="@+id/btnEditProfile"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@android:drawable/ic_menu_edit" />
 
             <!-- Delete Icon -->
             <ImageView
-                android:id="@+id/imgViewRecyclerDelete"
+                android:id="@+id/btnDeleteProfile"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="8dp"

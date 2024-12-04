@@ -2,6 +2,7 @@ package com.example.wms.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,10 +27,11 @@ class CheckoutActivity : DrawerActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCheckoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        allocateActivityTitle("Checkout")
+        allocateActivityTitle("Cart")
 
         cart = StoredCartHelper.get(this)
         if (cart?.productList?.isNotEmpty() == true) {
+            Log.d("CART", cart.toString())
             val adapter = OrderAdapter(cart!!.productList, { updatedProductList ->
                 updateTotalPrice(updatedProductList)
             }, this)
@@ -48,7 +50,7 @@ class CheckoutActivity : DrawerActivity() {
         binding.btnConfirmOrder.setOnClickListener {
             val productRepository = ProductRepository(this)
             val transactionRepository = TransactionRepository(this)
-
+            Log.d("CART", cart.toString())
             if (cart != null && cart!!.productList.isNotEmpty()) {
                 cart!!.productList.forEach { item ->
                     productRepository.getProduct(item.id.toString(),
@@ -60,7 +62,6 @@ class CheckoutActivity : DrawerActivity() {
                                         null, it.name, it.description, it.price,
                                         it.category, updateQty, it.imgName
                                     )
-
                                     productRepository.updateProduct(
                                         product.id.toString(),
                                         updatedProduct,
@@ -83,7 +84,7 @@ class CheckoutActivity : DrawerActivity() {
                                         SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                                     val date = Date()
                                     var total = binding.tvTotal.text.toString()
-                                    total = total.replace("Total: $","").trim()
+                                    total = total.replace("Total: $", "").trim()
                                     total = total.replace(",", "")
                                     val totalDouble = total.toDouble()
                                     val transactionDate: String = formatter.format(date)
@@ -92,6 +93,7 @@ class CheckoutActivity : DrawerActivity() {
                                         it.imgName,
                                         it.name,
                                         totalDouble,
+                                        item.quantity,
                                         transactionDate
                                     )
                                     transactionRepository.addTransaction(

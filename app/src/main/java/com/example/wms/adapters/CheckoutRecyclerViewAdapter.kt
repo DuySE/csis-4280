@@ -62,8 +62,8 @@ class CheckoutRecyclerViewAdapter(
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imgView: ImageView = view.findViewById<ImageView>(R.id.imgViewRecyclerImg)
-        val btnInc: ImageView = view.findViewById<ImageView>(R.id.btnIncreaseQuantity)
-        val btnDec: ImageView = view.findViewById<ImageView>(R.id.btnDecreaseQuantity)
+        val btnInc: ImageView = view.findViewById<ImageView>(R.id.btnIncreaseQty)
+        val btnDec: ImageView = view.findViewById<ImageView>(R.id.btnDecreaseQty)
         val txtViewName: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerName)
         val txtViewDescription: TextView =
             view.findViewById<TextView>(R.id.txtViewRecyclerDescription)

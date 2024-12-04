@@ -3,12 +3,13 @@ package com.example.wms.activities
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
-import android.util.Log
 import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.wms.adapters.TransactionAdapter
 import com.example.wms.apis.TransactionRepository
 import com.example.wms.databinding.ActivityFinancialReportBinding
@@ -21,7 +22,8 @@ class FinancialReportActivity : DrawerActivity() {
     private lateinit var transactionAdapter: TransactionAdapter
     private lateinit var transactions: MutableList<Transaction>
     private lateinit var transactionRepository: TransactionRepository
-    private lateinit var txtViewReportSummary: TextView
+    private lateinit var txtViewReportDetails: TextView
+    private lateinit var recyclerViewTransaction: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,13 +32,18 @@ class FinancialReportActivity : DrawerActivity() {
         allocateActivityTitle("Financial Report")
 
         // Initialize text view
-        txtViewReportSummary = financialReportBinding.txtReportSummary
+        txtViewReportDetails = financialReportBinding.txtSummaryDetails
 
         // Initialize transaction repository with context
         transactionRepository = TransactionRepository(this)
 
+        // Initialize transaction list
         transactions = mutableListOf<Transaction>()
+        // Initialize recycler view for transactions
+        recyclerViewTransaction = financialReportBinding.transactionList
         transactionAdapter = TransactionAdapter(transactions)
+        recyclerViewTransaction.adapter = transactionAdapter
+        recyclerViewTransaction.layoutManager = LinearLayoutManager(this)
 
         // Filter by date
         val editTextDate: EditText = financialReportBinding.editTextDate
@@ -53,13 +60,13 @@ class FinancialReportActivity : DrawerActivity() {
                         "%04d-%02d-%02d", year1, monthOfYear + 1, dayOfMonth
                     )
                     editTextDate.setText(selectedDate)
-                    transactionRepository.getTransaction(
-                        editTextDate.text.toString(), onSuccess = { data ->
-                            Log.d("FinancialReportActivity", "onSuccess: $data")
-                            transactionAdapter.setFilteredList(data.toMutableList())
-                            txtViewReportSummary.text = generateReport(transactions)
+                    transactionRepository.getTransactionsByDate(
+                        selectedDate, onSuccess = { data ->
+                            transactions = data.toMutableList()
+                            transactionAdapter.setFilteredList(transactions)
+                            txtViewReportDetails.text = generateReport(transactions)
                         }, onError = { error ->
-                            Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Haha", Toast.LENGTH_SHORT).show()
                         })
                 }, year, month, day
             )
@@ -97,10 +104,14 @@ class FinancialReportActivity : DrawerActivity() {
         val averageAmount = transactions.map { it.price }.average()
         val count = transactions.size
         val reportBuffer = StringBuffer()
-        reportBuffer.appendLine("Financial Report for 2024-12-03")
-        reportBuffer.appendLine("Total Transactions: 1")
-        reportBuffer.appendLine("Total Amount: ${"$%.2f".format(2000)}")
-        reportBuffer.appendLine("Average Transaction Amount: ${"$%.2f".format(averageAmount)}")
+        if (transactions.isEmpty()) {
+            reportBuffer.appendLine("No transaction found.")
+            return reportBuffer.toString()
+        }
+        reportBuffer.appendLine("Financial Report for ${transactions[0].date}")
+        reportBuffer.appendLine("Total Transactions: $count")
+        reportBuffer.appendLine("Total Amount: ${"$%,.2f".format(totalAmount)}")
+        reportBuffer.appendLine("Average Transaction Amount: ${"$%,.2f".format(averageAmount)}")
         return reportBuffer.toString()
     }
 }

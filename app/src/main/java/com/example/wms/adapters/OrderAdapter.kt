@@ -73,14 +73,14 @@ class OrderAdapter(
     override fun getItemCount(): Int = productList.size
 
     inner class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imgView: ImageView = view.findViewById<ImageView>(R.id.itemImage)
-        val txtViewName: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerName)
+        val imgView: ImageView = view.findViewById<ImageView>(R.id.productImage)
+        val txtViewName: TextView = view.findViewById<TextView>(R.id.productName)
         val txtViewDescription: TextView =
-            view.findViewById<TextView>(R.id.txtViewRecyclerDescription)
-        val txtViewPrice: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerPrice)
-        val txtViewQuantity: TextView = view.findViewById<TextView>(R.id.txtViewRecyclerQuantity)
-        val btnIncreaseQty: Button = view.findViewById<Button>(R.id.btnIncreaseQuantity)
-        val btnDecreaseQty: Button = view.findViewById<Button>(R.id.btnDecreaseQuantity)
+            view.findViewById<TextView>(R.id.productDescription)
+        val txtViewPrice: TextView = view.findViewById<TextView>(R.id.productPrice)
+        val txtViewQuantity: TextView = view.findViewById<TextView>(R.id.productQty)
+        val btnIncreaseQty: Button = view.findViewById<Button>(R.id.btnIncreaseQty)
+        val btnDecreaseQty: Button = view.findViewById<Button>(R.id.btnDecreaseQty)
     }
 
     private fun updateProductQuantity(productId: String, newQty: Int) {

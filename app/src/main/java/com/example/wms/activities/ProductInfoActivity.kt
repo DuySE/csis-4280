@@ -57,6 +57,7 @@ class ProductInfoActivity : DrawerActivity() {
                     if (existingProductIndex != -1) {
                         cart.productList[existingProductIndex] = product
                     } else {
+                        product.quantity = 1
                         cart.productList.add(product)
                     }
 

@@ -32,19 +32,21 @@ class TransactionAdapter(
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val img = storageReference.child("ProductImg/" + transactionList[position].image)
-        img.getDownloadUrl().addOnSuccessListener { uri ->
+        img.downloadUrl.addOnSuccessListener { uri ->
             Picasso.get().load(uri).into(holder.imageView)
         }
         holder.textViewName.text = transactionList[position].name
         holder.textViewPrice.text =
             String.format(Locale.US, "$%,.2f", transactionList[position].price)
+        holder.textViewQty.text = String.format(Locale.US, "Quantity: %d", transactionList[position].quantity)
     }
 
     override fun getItemCount(): Int = transactionList.size
 
     inner class TransactionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView? = view.findViewById(R.id.imgViewRecyclerImg)
-        val textViewName: TextView = view.findViewById(R.id.productImage)
-        val textViewPrice: TextView = view.findViewById(R.id.txtViewTransactionPrice)
+        val imageView: ImageView? = view.findViewById(R.id.productImage)
+        val textViewName: TextView = view.findViewById(R.id.productName)
+        val textViewPrice: TextView = view.findViewById(R.id.productPrice)
+        val textViewQty: TextView = view.findViewById(R.id.productQty)
     }
 }
