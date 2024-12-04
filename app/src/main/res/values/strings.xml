@@ -61,7 +61,7 @@
     <string name="menuMainActivity">Market</string>
     <string name="menuMyProfileActivity">My Profile</string>
     <string name="menuEditProductActivity">Manage Products</string>
-    <string name="textNavTitle">Marketeer</string>
+    <string name="textNavTitle">WMS</string>
     <string name="navDrawOpen">Open Navigation Drawer</string>
     <string name="navDrawClose">Close Navigation Drawer</string>
     <string name="navLogoDesc">Logo</string>
@@ -70,7 +70,7 @@
     <string name="menuNewProductActivity">New Product</string>
     <string name="menuPreviousActivity">Back</string>
     <string name="menuLogout">Logout</string>
-    <string name="textHomeWelcome">Welcome to Marketeer </string>
+    <string name="textHomeWelcome">Welcome to WMS </string>
     <string name="textHomeWelcome2">Open the navigation drawer to begin using!</string>
     <string name="txtNotAdded">Not added</string>
     <string name="editTxtNewPassword">New Password</string>

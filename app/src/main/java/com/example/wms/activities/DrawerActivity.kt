@@ -46,6 +46,7 @@ open class DrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
         val menu = navigation.menu
         repository.getUser(StoredDataHelper.get(this), onSuccess = { user: User ->
+            menu.findItem(R.id.menuMainActivity).isVisible = !user.isAdmin
             menu.findItem(R.id.menuNewProductActivity).isVisible = user.isAdmin
             menu.findItem(R.id.menuManageProductActivity).isVisible = user.isAdmin
             menu.findItem(R.id.menuManageUserActivity).isVisible = user.isAdmin
@@ -94,7 +95,7 @@ open class DrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
         } else if (item.itemId == R.id.menuFinancialReportActivity) {
             startActivity(Intent(this, FinancialReportActivity::class.java))
-            overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
+            drawer.closeDrawer(GravityCompat.START)
         } else if (item.itemId == R.id.menuLogout) {
             val builder = AlertDialog.Builder(this)
             builder.setIcon(R.drawable.ic_launcher_foreground)
