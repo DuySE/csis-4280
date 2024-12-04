@@ -91,7 +91,6 @@ class CheckoutActivity : DrawerActivity() {
                                     )
                                     transactionRepository.addTransaction(
                                         newTransaction,
-                                        transactionDate,
                                         onSuccess = {
                                             Toast.makeText(
                                                 this,

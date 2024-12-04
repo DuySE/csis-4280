@@ -67,7 +67,6 @@ interface ApiService {
     // Route to add a new transaction item
     @POST("/transactions")
     fun addTransaction(
-        @Body transaction: Transaction,
-        @Body date: String
+        @Body transaction: Transaction
     ): Call<Transaction>
 }

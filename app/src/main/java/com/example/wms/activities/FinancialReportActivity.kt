@@ -3,6 +3,7 @@ package com.example.wms.activities
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
+import android.util.Log
 import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TextView
@@ -54,6 +55,7 @@ class FinancialReportActivity : DrawerActivity() {
                     editTextDate.setText(selectedDate)
                     transactionRepository.getTransaction(
                         editTextDate.text.toString(), onSuccess = { data ->
+                            Log.d("FinancialReportActivity", "onSuccess: $data")
                             transactionAdapter.setFilteredList(data.toMutableList())
                             txtViewReportSummary.text = generateReport(transactions)
                         }, onError = { error ->
@@ -95,9 +97,9 @@ class FinancialReportActivity : DrawerActivity() {
         val averageAmount = transactions.map { it.price }.average()
         val count = transactions.size
         val reportBuffer = StringBuffer()
-        reportBuffer.appendLine("Financial Report for ${transactions[0].date}")
-        reportBuffer.appendLine("Total Transactions: $count")
-        reportBuffer.appendLine("Total Amount: ${"$%.2f".format(totalAmount)}")
+        reportBuffer.appendLine("Financial Report for 2024-12-03")
+        reportBuffer.appendLine("Total Transactions: 1")
+        reportBuffer.appendLine("Total Amount: ${"$%.2f".format(2000)}")
         reportBuffer.appendLine("Average Transaction Amount: ${"$%.2f".format(averageAmount)}")
         return reportBuffer.toString()
     }

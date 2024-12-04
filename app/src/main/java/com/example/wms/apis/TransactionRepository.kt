@@ -13,11 +13,10 @@ class TransactionRepository(context: Context) {
     // Add new transaction item
     fun addTransaction(
         transaction: Transaction,
-        date: String,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
-        apiService.addTransaction(transaction, date)
+        apiService.addTransaction(transaction)
             .enqueue(object : Callback<Transaction> {
                 override fun onResponse(
                     call: Call<Transaction>,
