@@ -46,7 +46,10 @@ open class DrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
         val menu = navigation.menu
         repository.getUser(StoredDataHelper.get(this), onSuccess = { user: User ->
+            // User authorization
             menu.findItem(R.id.menuMainActivity).isVisible = !user.isAdmin
+            menu.findItem(R.id.menuCartActivity).isVisible = !user.isAdmin
+            // Admin authorization
             menu.findItem(R.id.menuNewProductActivity).isVisible = user.isAdmin
             menu.findItem(R.id.menuManageProductActivity).isVisible = user.isAdmin
             menu.findItem(R.id.menuManageUserActivity).isVisible = user.isAdmin
