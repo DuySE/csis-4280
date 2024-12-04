@@ -20,7 +20,7 @@ import com.example.wms.R
 import com.example.wms.apis.ProductRepository
 import com.example.wms.apis.UserRepository
 import com.example.wms.databinding.ActivityMyProfileEditBinding
-import com.example.wms.utils.StoredDataHelper
+import com.example.wms.helpers.StoredDataHelper
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso

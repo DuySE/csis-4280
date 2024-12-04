@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.wms.apis.UserRepository
 import com.example.wms.databinding.ActivityLoginBinding
 import com.example.wms.models.LoginRequest
-import com.example.wms.utils.StoredDataHelper
+import com.example.wms.helpers.StoredDataHelper
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var editTextUsername: EditText

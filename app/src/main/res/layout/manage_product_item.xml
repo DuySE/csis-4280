@@ -73,14 +73,14 @@
                 android:layout_gravity="top|end">
                 <!-- Edit Icon -->
                 <ImageView
-                    android:id="@+id/imgViewRecyclerEdit"
+                    android:id="@+id/btnEditProfile"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@android:drawable/ic_menu_edit" />
 
                 <!-- Delete Icon -->
                 <ImageView
-                    android:id="@+id/imgViewRecyclerDelete"
+                    android:id="@+id/btnDeleteProfile"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"

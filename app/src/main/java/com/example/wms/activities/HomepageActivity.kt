@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.wms.apis.UserRepository
 import com.example.wms.databinding.ActivityHomepageBinding
-import com.example.wms.utils.StoredDataHelper
+import com.example.wms.helpers.StoredDataHelper
 
 
 // This activity is mainly here to add a buffer so user won't crash on back button press.

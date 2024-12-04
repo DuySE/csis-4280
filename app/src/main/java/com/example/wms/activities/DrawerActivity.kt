@@ -18,8 +18,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.example.wms.R
 import com.example.wms.apis.UserRepository
 import com.example.wms.databinding.ActivityDrawerBinding
+import com.example.wms.helpers.StoredDataHelper
 import com.example.wms.models.User
-import com.example.wms.utils.StoredDataHelper
 import com.google.android.material.navigation.NavigationView
 
 open class DrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -88,6 +88,9 @@ open class DrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
         } else if (item.itemId == R.id.menuManageProductActivity) {
             startActivity(Intent(this, ManageProductActivity::class.java))
+            overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
+        } else if (item.itemId == R.id.menuCheckoutActivity) {
+            startActivity(Intent(this, CheckoutActivity::class.java))
             overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
         } else if (item.itemId == R.id.menuFinancialReportActivity) {
             startActivity(Intent(this, FinancialReportActivity::class.java))

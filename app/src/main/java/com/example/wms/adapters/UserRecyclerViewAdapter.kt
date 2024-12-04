@@ -33,9 +33,9 @@ class UserRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        holder.txtViewRecyclerUsername.text = userList[position].username
-        holder.txtViewRecyclerAddress.text = userList[position].address
-        holder.txtViewRecyclerPhone.text = userList[position].phone
+        holder.userName.text = userList[position].username
+        holder.userAddress.text = userList[position].address
+        holder.userPhone.text = userList[position].phone
         val img = storageReference.child("ProfileImg/${userList[position].profileImg}")
         img.downloadUrl.addOnSuccessListener { uri ->
             Picasso.get().load(uri).into(holder.imageView)
@@ -47,12 +47,12 @@ class UserRecyclerViewAdapter(
     override fun getItemCount(): Int = userList.size
 
     inner class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.profileImg)
-        val imgViewEdit: ImageView = view.findViewById<ImageView>(R.id.imgViewRecyclerEdit)
-        val imgViewDelete: ImageView = view.findViewById<ImageView>(R.id.imgViewRecyclerDelete)
-        val txtViewRecyclerUsername: TextView = view.findViewById(R.id.txtViewRecyclerUsername)
-        val txtViewRecyclerAddress: TextView = view.findViewById(R.id.txtViewRecyclerAddress)
-        val txtViewRecyclerPhone: TextView = view.findViewById(R.id.txtViewRecyclerPhone)
+        val imageView: ImageView = view.findViewById(R.id.userImage)
+        val imgViewEdit: ImageView = view.findViewById<ImageView>(R.id.btnEditProfile)
+        val imgViewDelete: ImageView = view.findViewById<ImageView>(R.id.btnDeleteProfile)
+        val userName: TextView = view.findViewById(R.id.userName)
+        val userAddress: TextView = view.findViewById(R.id.userAddress)
+        val userPhone: TextView = view.findViewById(R.id.userPhone)
 
         init {
             imgViewEdit.setOnClickListener {

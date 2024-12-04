@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:gravity="bottom"
+    android:orientation="vertical"
     android:padding="16dp">
-
 
     <ImageView
         android:id="@+id/navLogo"
@@ -14,6 +13,6 @@
         android:layout_height="match_parent"
         android:background="#fafafa"
         android:contentDescription="@string/navLogoDesc"
-        app:srcCompat="@drawable/marketeer_logo" />
+        app:srcCompat="@drawable/wms_logo" />
 
 </LinearLayout>
