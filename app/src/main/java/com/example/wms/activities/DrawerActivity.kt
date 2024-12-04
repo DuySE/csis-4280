@@ -89,7 +89,7 @@ open class DrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         } else if (item.itemId == R.id.menuManageProductActivity) {
             startActivity(Intent(this, ManageProductActivity::class.java))
             overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
-        } else if (item.itemId == R.id.menuCheckoutActivity) {
+        } else if (item.itemId == R.id.menuCartActivity) {
             startActivity(Intent(this, CheckoutActivity::class.java))
             overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
         } else if (item.itemId == R.id.menuFinancialReportActivity) {

@@ -107,11 +107,13 @@ class MainActivity : DrawerActivity(),
     }
 
     private fun filterList(text: String) {
-        filteredList = productList.filter { product ->
-            product.name.lowercase(Locale.getDefault())
-                .contains(text.lowercase(Locale.getDefault()))
+        val query = text.lowercase(Locale.getDefault())
+        filteredList = productList.filter {
+            it.name.lowercase().contains(query) || it.category.lowercase().contains(query) ||
+                    it.description.lowercase().contains(query)
         }.toMutableList()
-        if (filteredList.isEmpty()) txtViewNoProduct.text = getString(R.string.txtNoProductFound)
+        txtViewNoProduct.text =
+            if (filteredList.isEmpty()) getString(R.string.txtNoProductFound) else ""
         itemAdapter.setFilteredList(filteredList)
     }
 

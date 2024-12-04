@@ -83,7 +83,11 @@ class ManageProductActivity : DrawerActivity(), ProductRecyclerViewAdapter.OnIte
     private fun filterProduct(newText: String, products: List<Product>) {
         filteredList = products.filter {
             it.name.lowercase(Locale.getDefault())
-                .contains(newText.lowercase(Locale.getDefault()))
+                .contains(newText.lowercase(Locale.getDefault())) ||
+                    it.description.lowercase(Locale.getDefault())
+                        .contains(newText.lowercase(Locale.getDefault())) ||
+                    it.category.lowercase(Locale.getDefault())
+                        .contains(newText.lowercase(Locale.getDefault()))
         }.toMutableList()
         if (filteredList.isEmpty()) txtViewNoProduct.text = getString(R.string.txtNoProductFound)
         else txtViewNoProduct.text = ""

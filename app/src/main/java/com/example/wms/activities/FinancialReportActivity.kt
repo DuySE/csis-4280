@@ -92,10 +92,8 @@ class FinancialReportActivity : DrawerActivity() {
     }
 
     private fun filterList(text: String) {
-        val filteredList: MutableList<Transaction> = transactions.filter { product ->
-            product.name.lowercase(Locale.getDefault())
-                .contains(text.lowercase(Locale.getDefault()))
-        }.toMutableList()
+        val filteredList: MutableList<Transaction> =
+            transactions.filter { it.name.contains(text) }.toMutableList()
         transactionAdapter.setFilteredList(filteredList)
     }
 
